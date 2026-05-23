@@ -11,7 +11,7 @@ Menu ini berfungsi sebagai katalog utama yang menampilkan seluruh koleksi buku y
 
 **Fitur yang Termuat:**
 * **Tampilan Tabel Terstruktur:** Data buku disajikan dalam format tabel yang rapi, mencakup informasi seperti `ID Buku`, `Judul`, `Penulis`, `Penerbit`, `Tahun`, dan `Status` (Tersedia/Dipinjam).
-* **Informasi Ketersediaan Real-Time:** Status buku akan selalu *up-to-date* menyesuaikan dengan transaksi peminjaman dan pengembalian terbaru.
+* **Informasi Ketersediaan:** Status buku akan selalu menyesuaikan peminjaman dan pengembalian terbaru.
 
 ---
 
@@ -19,14 +19,14 @@ Menu ini berfungsi sebagai katalog utama yang menampilkan seluruh koleksi buku y
 Menu ini dirancang untuk memudahkan pengguna dalam menemukan buku spesifik tanpa harus melihat seluruh daftar buku secara manual.
 
 **Fitur yang Termuat:**
-* **Pencarian Fleksibel (Partial Matching):** Pengguna tidak perlu mengetikkan judul secara utuh. Memasukkan sebagian kata (misal: "Harry") akan memunculkan semua buku yang mengandung kata tersebut (contoh: "Harry Potter").
+* **Pencarian Fleksibel (Partial Matching):** Pengguna tidak perlu mengetikkan judul secara utuh. Memasukkan sebagian kata (misal: "Rinaldi") akan memunculkan semua buku yang mengandung kata tersebut (contoh: "Rinaldi Munir").
 * **Case-Insensitive:** Pencarian tidak terpengaruh oleh huruf besar atau kecil. Input `PYTHON`, `python`, atau `PyThoN` akan memberikan hasil pencarian yang sama.
 * **Validasi Hasil Kosong:** Jika kata kunci yang dicari tidak ada di pangkalan data, sistem akan memberikan umpan balik (feedback) yang informatif seperti, *"Maaf, buku dengan judul tersebut tidak ditemukan."*
 
 ---
 
 ## 📤 3. Pinjam Buku
-Menu ini adalah fungsionalitas utama untuk memproses transaksi peminjaman buku oleh *client*. 
+Menu ini adalah fungsionalitas utama untuk memproses peminjaman buku oleh *client*. 
 
 **Fitur yang Termuat:**
 * **Verifikasi ID Buku:** Sistem akan meminta pengguna memasukkan `ID Buku`. Jika ID tidak valid atau salah ketik, sistem akan meminta input ulang.
