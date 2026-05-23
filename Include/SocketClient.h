@@ -1,14 +1,23 @@
-#pragma once
+#ifndef SOCKETCLIENT_H
+#define SOCKETCLIENT_H
+
 #include <string>
 
+using namespace std;
+
 class SocketClient {
+
 private:
     int sockFd;
-    std::string serverIP;
+
+    string serverIP;
     int port;
 
 public:
-    SocketClient(std::string ip, int port);
 
-    std::string sendRequest(std::string jsonPayload);
+    SocketClient(string ip, int port);
+
+    string sendRequest(string jsonPayload);
 };
+
+#endif
