@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    SocketClient client("127.0.0.1", 8080);
+    SocketClient client("//ttlbo-180-252-147-167.run.pinggy-free.link", 42835);
     Menu menu(client);
     menu.show();
     return 0;

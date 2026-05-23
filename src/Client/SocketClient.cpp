@@ -1,48 +1,77 @@
 #include "SocketClient.h"
-#include <cstring>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <arpa/inet.h>
+
 #include <iostream>
+#include <cstring>
+
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netdb.h>
 
 using namespace std;
 
 SocketClient::SocketClient(string ip, int port)
-    : sockFd(-1), serverIP(ip), port(port) {}
+    : serverIP(ip), port(port), sockFd(-1) {}
 
 string SocketClient::sendRequest(string jsonPayload) {
+
+    // 1. Buat socket
     sockFd = socket(AF_INET, SOCK_STREAM, 0);
+
     if (sockFd < 0) {
-        return "{\"status\":\"ERROR\",\"message\":\"Gagal membuat socket\"}";
+        return "{\"status\":\"ERROR\",\"message\":\"Socket gagal dibuat\"}";
     }
 
-    sockaddr_in addr;
-    memset(&addr, 0, sizeof(addr));
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
+    // 2. Resolve hostname Pinggy
+    struct addrinfo hints {};
+    struct addrinfo* result = nullptr;
 
-    if (inet_pton(AF_INET, serverIP.c_str(), &addr.sin_addr) <= 0) {
+    hints.ai_family   = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+
+    string portStr = to_string(port);
+
+    int status = getaddrinfo(
+        serverIP.c_str(),
+        portStr.c_str(),
+        &hints,
+        &result
+    );
+
+    if (status != 0) {
         close(sockFd);
-        return "{\"status\":\"ERROR\",\"message\":\"IP server tidak valid\"}";
+        return "{\"status\":\"ERROR\",\"message\":\"Host tidak ditemukan\"}";
     }
 
-    if (connect(sockFd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+    // 3. Connect ke Pinggy
+    if (connect(sockFd, result->ai_addr, result->ai_addrlen) < 0) {
+
+        freeaddrinfo(result);
         close(sockFd);
-        return "{\"status\":\"ERROR\",\"message\":\"Gagal connect ke server\"}";
+
+        return "{\"status\":\"ERROR\",\"message\":\"Connect gagal\"}";
     }
 
-    send(sockFd, jsonPayload.c_str(), jsonPayload.size(), 0);
+    freeaddrinfo(result);
 
-    char buffer[4096];
-    memset(buffer, 0, sizeof(buffer));
+    // 4. Kirim JSON
+    send(
+        sockFd,
+        jsonPayload.c_str(),
+        jsonPayload.size(),
+        0
+    );
 
-    int bytesRead = read(sockFd, buffer, sizeof(buffer) - 1);
+    // 5. Terima response
+    char buffer[4096] = {0};
+
+    read(
+        sockFd,
+        buffer,
+        sizeof(buffer)
+    );
+
+    // 6. Tutup socket
     close(sockFd);
-
-    if (bytesRead <= 0) {
-        return "{\"status\":\"ERROR\",\"message\":\"Tidak ada response dari server\"}";
-    }
 
     return string(buffer);
 }
