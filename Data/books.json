@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "id": "B001",
+      "type": "BOOK",
+      "title": "Algoritma dan Struktur Data",
+      "pengarang": "Rinaldi Munir",
+      "isbn": "978-602-xxx",
+      "tahun": 2020,
+      "stok": 3
+    },
+    {
+      "id": "B002",
+      "type": "BOOK",
+      "title": "Pemrograman C++",
+      "pengarang": "Budi Santoso",
+      "isbn": "978-123-abc",
+      "tahun": 2021,
+      "stok": 2
+    },
+    {
+      "id": "J001",
+      "type": "JOURNAL",
+      "title": "IEEE Transactions on Computing",
+      "penerbit": "IEEE",
+      "issn": "0018-9340",
+      "tahun": 2024,
+      "volume": 72,
+      "edisi": 4
+    }
+  ]
+}
