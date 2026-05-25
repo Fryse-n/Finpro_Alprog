@@ -3,6 +3,41 @@
 Aplikasi Perpustakaan Digital (Library Management)
 //Deskripsi: Sistem peminjaman buku berbasis client-server. Server menyimpan katalog buku, client (mahasiswa) bisa mencari, meminjam, dan mengembalikan buku.
 
+# Prasyarat
+- C++17
+- g++
+- Linux / WSL / macOS untuk versi socket POSIX yang digunakan saat ini
+- Jika memakai Windows native, source socket perlu dipindahkan ke Winsock
+
+# Cara Kompilasi
+Pastikan Anda berada di folder root project.
+
+# Kompilasi Server
+g++ -std=c++17 -IInclude \
+src/Server/MainServer.cpp \
+src/Server/Book.cpp \
+src/Server/Journal.cpp \
+src/Server/BorrowRecord.cpp \
+src/Server/JSONParser.cpp \
+src/Server/LibraryManager.cpp \
+src/Server/SocketServer.cpp \
+-o server_app
+
+# Kompilasi Client
+g++ -std=c++17 -IInclude \
+src/Client/MainClient.cpp \
+src/Client/Menu.cpp \
+src/Client/SocketClient.cpp \
+src/Client/JSONParser.cpp \
+-o client_app
+
+# Cara Menjalankan
+1. Jalankan server terlebih dahulu:
+   ./server_app
+3. Jalankan client pada terminal lain:
+   ./client_app
+5. Ikuti menu yang muncul pada client.
+
 Penjelasan dan Penggunaan Program:
 ---
 
@@ -38,3 +73,16 @@ Menu ini digunakan untuk menyelesaikan transaksi peminjaman dan mengembalikan bu
 
 **Fitur yang Termuat:**
 * **Validasi Kepemilikan Transaksi:** Sistem memastikan bahwa `ID Buku` yang dimasukkan benar-benar sedang dalam status "Dipinjam".
+
+# Client tidak bisa connect
+
+Pastikan:
+
+- server sudah dijalankan terlebih dahulu
+- host dan port client benar
+- firewall mengizinkan koneksi
+- jika memakai tunnel, gunakan host dan port dari tunnel yang aktif
+
+# Catatan
+
+Source code ini saat ini menggunakan socket POSIX, sehingga paling cocok dijalankan di Linux, WSL, atau macOS. Jika ingin dijalankan di Windows native, bagian socket perlu diubah ke Winsock.
